@@ -13,7 +13,7 @@ import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, delet
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 // =====================================================
-// 🔥 Firebase設定
+// Firebase設定
 // =====================================================
 const firebaseConfig = {
   apiKey: "AIzaSyA7NQXCafSoB8ETqesiaUjUN_RyZMEhZho",
@@ -144,7 +144,8 @@ body{font-family:var(--font);background:var(--c-bg);color:var(--c-text);font-siz
 }
 .sb-nav-item:hover{background:var(--c-surface2);color:var(--c-text)}
 .sb-nav-item.on{background:var(--c-blue-light);color:var(--c-blue);font-weight:500}
-.sb-nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;opacity:.75}
+.sb-nav-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;flex-shrink:0;opacity:.75}
+.sb-nav-icon svg{width:18px;height:18px}
 .sb-nav-item.on .sb-nav-icon{opacity:1}
 
 .sb-section{
@@ -577,7 +578,8 @@ body{font-family:var(--font);background:var(--c-bg);color:var(--c-text);font-siz
   transition:color .1s;position:relative;
 }
 .mobile-nav-btn.on{color:var(--c-blue)}
-.mobile-nav-icon{font-size:20px;line-height:1}
+.mobile-nav-icon{display:flex;align-items:center;justify-content:center;line-height:1}
+.mobile-nav-icon svg{width:20px;height:20px}
 .mobile-nav-label{font-size:10px;font-weight:500;margin-top:1px}
 .mobile-nav-badge{
   position:absolute;top:4px;right:6px;
@@ -649,6 +651,29 @@ body{font-family:var(--font);background:var(--c-bg);color:var(--c-text);font-siz
 <script>
 // ── Constants ──
 var ECOLS=['#1a73e8','#0b8043','#d93025','#f6bf26','#8430ce','#e91e63','#039be5','#33b679'];
+
+// ── アイコン ──
+var ICON={
+  home:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 11v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>',
+  cal:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  task:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  file:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  koban:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+  chat:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  tag:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>',
+  bell:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+  user:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  logout:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
+  send:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+  check:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  close:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  plus:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  pin:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+  film:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>',
+  camera:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+  document:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>'
+};
+window.ICON=ICON;
 var MBG=['#e8f0fe','#e6f4ea','#fce8e6','#fff8e1','#f3e8fd','#fce4ec','#e1f5fe','#e2f4e8'];
 var MTC=['#1a73e8','#0b8043','#d93025','#f09300','#8430ce','#e91e63','#039be5','#0b8043'];
 var DEF_TAGS=[{name:'撮影',color:'#d93025'},{name:'編集',color:'#8430ce'},{name:'音響',color:'#039be5'},{name:'納品',color:'#0b8043'},{name:'クライアント',color:'#f6bf26'},{name:'その他',color:'#80868b'}];
@@ -981,11 +1006,11 @@ function renderMobileNav(){
   if(!S.user)return '';
   var uc=unreadCount();
   var tabs=[
-    {id:'home',icon:'⊞',label:'ホーム'},
-    {id:'cal',icon:'◻',label:'予定'},
-    {id:'task',icon:'✓',label:'タスク'},
-    {id:'koban',icon:'📋',label:'香盤表'},
-    {id:'chat',icon:'◯',label:'チャット'},
+    {id:'home',icon:ICON.home,label:'ホーム'},
+    {id:'cal',icon:ICON.cal,label:'予定'},
+    {id:'task',icon:ICON.task,label:'タスク'},
+    {id:'koban',icon:ICON.koban,label:'香盤表'},
+    {id:'chat',icon:ICON.chat,label:'チャット'},
   ];
   return '<nav class="mobile-nav">'+
     '<div class="mobile-nav-inner">'+
@@ -997,9 +1022,8 @@ function renderMobileNav(){
         (t.badge?'<div class="mobile-nav-badge">'+t.badge+'</div>':'')+
       '</button>';
     }).join('')+
-    // 通知バッジ付きボタン（省スペースで右端に）
     '<button class="mobile-nav-btn'+(S.tab==='notif'?' on':'')+'" onclick="setTab(\'notif\');markAllRead()" style="position:relative">'+
-      '<div class="mobile-nav-icon">△</div>'+
+      '<div class="mobile-nav-icon">'+ICON.bell+'</div>'+
       '<div class="mobile-nav-label">通知</div>'+
       (uc>0?'<div class="mobile-nav-badge">'+uc+'</div>':'')+
     '</button>'+
@@ -1023,15 +1047,15 @@ function renderSidebar(){
     '<button class="create-btn" onclick="openModal(\'event\')"><span class="create-btn-plus">+</span><span>新しい予定</span></button>'+
     '<div class="mini-cal" id="mini-cal">'+renderMiniCal()+'</div>'+
     '<div class="sb-divider"></div>'+
-    '<button class="sb-nav-item '+(S.tab==='home'&&!S.proj?'on':'')+'" onclick="setTab(\'home\')"><span class="sb-nav-icon">⊞</span>ホーム</button>'+
-    '<button class="sb-nav-item '+(S.tab==='cal'&&!S.proj?'on':'')+'" onclick="setTab(\'cal\')"><span class="sb-nav-icon">◻</span>スケジュール</button>'+
-    '<button class="sb-nav-item '+(S.tab==='task'&&!S.proj?'on':'')+'" onclick="setTab(\'task\')"><span class="sb-nav-icon">✓</span>タスク</button>'+
-    '<button class="sb-nav-item '+(S.tab==='file'?'on':'')+'" onclick="setTab(\'file\')"><span class="sb-nav-icon">◫</span>ファイル</button>'+
-    '<button class="sb-nav-item '+(S.tab==='koban'?'on':'')+'" onclick="setTab(\'koban\')"><span class="sb-nav-icon">📋</span>香盤表</button>'+
-    '<button class="sb-nav-item '+(S.tab==='chat'?'on':'')+'" onclick="setTab(\'chat\')"><span class="sb-nav-icon">◯</span>チャット</button>'+
-    '<button class="sb-nav-item '+(S.tab==='tags'?'on':'')+'" onclick="setTab(\'tags\')"><span class="sb-nav-icon">#</span>タグ管理</button>'+
+    '<button class="sb-nav-item '+(S.tab==='home'&&!S.proj?'on':'')+'" onclick="setTab(\'home\')"><span class="sb-nav-icon">'+ICON.home+'</span>ホーム</button>'+
+    '<button class="sb-nav-item '+(S.tab==='cal'&&!S.proj?'on':'')+'" onclick="setTab(\'cal\')"><span class="sb-nav-icon">'+ICON.cal+'</span>スケジュール</button>'+
+    '<button class="sb-nav-item '+(S.tab==='task'&&!S.proj?'on':'')+'" onclick="setTab(\'task\')"><span class="sb-nav-icon">'+ICON.task+'</span>タスク</button>'+
+    '<button class="sb-nav-item '+(S.tab==='file'?'on':'')+'" onclick="setTab(\'file\')"><span class="sb-nav-icon">'+ICON.file+'</span>ファイル</button>'+
+    '<button class="sb-nav-item '+(S.tab==='koban'?'on':'')+'" onclick="setTab(\'koban\')"><span class="sb-nav-icon">'+ICON.koban+'</span>香盤表</button>'+
+    '<button class="sb-nav-item '+(S.tab==='chat'?'on':'')+'" onclick="setTab(\'chat\')"><span class="sb-nav-icon">'+ICON.chat+'</span>チャット</button>'+
+    '<button class="sb-nav-item '+(S.tab==='tags'?'on':'')+'" onclick="setTab(\'tags\')"><span class="sb-nav-icon">'+ICON.tag+'</span>タグ管理</button>'+
     '<button class="sb-nav-item '+(S.tab==='notif'?'on':'')+'" onclick="setTab(\'notif\');markAllRead()" style="position:relative">'+
-      '<span class="sb-nav-icon">△</span>通知'+
+      '<span class="sb-nav-icon">'+ICON.bell+'</span>通知'+
       (unreadCount()>0?'<span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--c-red);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px">'+unreadCount()+'</span>':'')+
     '</button>'+
     '<div class="sb-divider"></div>'+
@@ -1047,8 +1071,8 @@ function renderSidebar(){
     '<button class="sb-proj-item" onclick="openModal(\'project\')" style="color:var(--c-blue)">＋ プロジェクト追加</button>'+
     '<div style="flex:1"></div>'+
     '<div class="sb-divider"></div>'+
-    '<button class="sb-nav-item" onclick="openModal(\'profile\')"><span class="sb-nav-icon">◉</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(S.user.displayName||S.user.email)+'</span></button>'+
-    '<button class="sb-nav-item" onclick="doLogout()"><span class="sb-nav-icon">→</span>ログアウト</button>'+
+    '<button class="sb-nav-item" onclick="openModal(\'profile\')"><span class="sb-nav-icon">'+ICON.user+'</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(S.user.displayName||S.user.email)+'</span></button>'+
+    '<button class="sb-nav-item" onclick="doLogout()"><span class="sb-nav-icon">'+ICON.logout+'</span>ログアウト</button>'+
   '</nav>';
   return html;
 }
@@ -1118,8 +1142,8 @@ function renderTopbar(title,showTask){
     (S.tab==='tags'?'<button class="topbar-btn topbar-btn-primary" style="margin-left:auto" onclick="openModal(\'tagEdit\')">＋ タグ追加</button>':'')+
     (S.tab==='koban'?
       '<div style="display:flex;gap:8px;margin-left:auto">'+
-        '<button class="topbar-btn" onclick="printKoban()">🖨 PDF出力</button>'+
-        '<button class="topbar-btn" onclick="autoGenKoban()">✨ 予定から自動生成</button>'+
+        '<button class="topbar-btn" onclick="printKoban()">PDF出力</button>'+
+        '<button class="topbar-btn" onclick="autoGenKoban()">予定から自動生成</button>'+
         '<button class="topbar-btn topbar-btn-primary" onclick="openModal(\'kobanRow\')">＋ 行を追加</button>'+
       '</div>'
     :'')+
@@ -1521,18 +1545,18 @@ function renderEvPopup(){
           '<div class="ev-popup-color" style="background:'+color+';width:14px;height:14px;border-radius:2px"></div>'+
           '<div class="ev-popup-title">'+(ev.title||'')+'</div>'+
           '<div class="ev-popup-actions">'+
-            '<button class="ev-popup-action" onclick="openModal(\'event\',\''+ev.id+'\')">✏</button>'+
-            '<button class="ev-popup-action" onclick="delEvent(\''+ev.id+'\')">🗑</button>'+
+            '<button class="ev-popup-action" onclick="openModal(\'event\',\''+ev.id+'\')" title="編集">編集</button>'+
+            '<button class="ev-popup-action" onclick="delEvent(\''+ev.id+'\')" title="削除">削除</button>'+
             '<button class="ev-popup-action" onclick="S.selEvId=null;render()">✕</button>'+
           '</div>'+
         '</div>'+
         '<div class="ev-popup-body">'+
-          '<div class="ev-popup-row"><span class="ev-popup-icon">🕐</span><span>'+
+          '<div class="ev-popup-row"><span class="ev-popup-icon" style="font-size:11px;color:var(--c-text3);font-weight:600">時間</span><span>'+
           (ev.date?fmtDate(ev.date)+(ev.endDate&&ev.endDate!==ev.date?' 〜 '+fmtDate(ev.endDate):'')+'（'+dayName(ev.date)+'）':'')+(ev.allDay?' 終日':(ev.start?' '+ev.start+' 〜 '+ev.end:''))+
         '</span></div>'+
-          (ev.note?'<div class="ev-popup-row"><span class="ev-popup-icon">📝</span><span>'+ev.note+'</span></div>':'')+
+          (ev.note?'<div class="ev-popup-row"><span class="ev-popup-icon" style="font-size:11px;color:var(--c-text3);font-weight:600">メモ</span><span>'+ev.note+'</span></div>':'')+
           ((ev.attendees||[]).length?
-            '<div class="ev-popup-row"><span class="ev-popup-icon">👥</span><div>'+
+            '<div class="ev-popup-row"><span class="ev-popup-icon" style="font-size:11px;color:var(--c-text3);font-weight:600">担当</span><div>'+
               '<div style="font-size:12px;color:var(--c-text2);margin-bottom:4px">参加者 '+ev.attendees.length+'名</div>'+
               '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
                 ev.attendees.map(function(a){
@@ -1544,7 +1568,7 @@ function renderEvPopup(){
           :'')+
         '</div>'+
         '<div class="ev-popup-footer">'+
-          '<a class="gcbtn" href="'+gcalURL(ev)+'" target="_blank">📆 Googleカレンダーに追加</a>'+
+          '<a class="gcbtn" href="'+gcalURL(ev)+'" target="_blank">Googleカレンダーに追加</a>'+
         '</div>'+
       '</div>'+
     '</div>'+
@@ -1585,7 +1609,7 @@ function renderDashboard(){
   var hour=new Date().getHours();
   var greet=hour<12?'おはようございます':hour<18?'こんにちは':'お疲れ様です';
   html+='<div style="margin-bottom:24px">'+
-    '<div style="font-size:22px;font-weight:400;color:var(--c-text)">'+greet+'、'+(S.user.displayName||'').split(' ')[0]+'さん 👋</div>'+
+    '<div style="font-size:22px;font-weight:400;color:var(--c-text)">'+greet+'、'+(S.user.displayName||'').split(' ')[0]+'さん</div>'+
     '<div style="font-size:13px;color:var(--c-text2);margin-top:4px">'+fmtDateFull(today)+'</div>'+
   '</div>';
 
@@ -1632,7 +1656,7 @@ function renderDashboard(){
   // 今日の予定
   html+='<div style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;padding:16px">'+
     '<div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">'+
-      '📅 今日の予定'+
+      '今日の予定'+
       '<span onclick="setTab(\'cal\')" style="font-size:12px;color:var(--c-blue);cursor:pointer;font-weight:400">すべて見る</span>'+
     '</div>';
   if(!todayEvs.length){
@@ -1657,12 +1681,12 @@ function renderDashboard(){
   // 締切が近いタスク
   html+='<div style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;padding:16px">'+
     '<div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">'+
-      '⚡ 締切が近いタスク'+
+      '締切が近いタスク'+
       '<span onclick="setTab(\'task\')" style="font-size:12px;color:var(--c-blue);cursor:pointer;font-weight:400">すべて見る</span>'+
     '</div>';
   var showTasks=[].concat(overTasks,urgentTasks).slice(0,5);
   if(!showTasks.length){
-    html+='<div style="font-size:13px;color:var(--c-text3);text-align:center;padding:16px 0">締切が近いタスクはありません 🎉</div>';
+    html+='<div style="font-size:13px;color:var(--c-text3);text-align:center;padding:16px 0">締切が近いタスクはありません</div>';
   } else {
     showTasks.forEach(function(t){
       var over=isOver(t.due);
@@ -1671,7 +1695,7 @@ function renderDashboard(){
         '<div style="flex:1;min-width:0">'+
           '<div style="font-size:13px;font-weight:500;color:var(--c-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+t.title+'</div>'+
           '<div style="font-size:11px;color:'+(over?'var(--c-red)':'var(--c-text3)')+'">'+
-            (over?'⚠ ':'')+'期日 '+fmtDate(t.due)+
+            (over?'':'')+'期日 '+fmtDate(t.due)+
           '</div>'+
         '</div>'+
         '<span style="font-size:10px;padding:2px 8px;border-radius:4px;background:'+(over?'#fce8e6':'#fef7e0')+';color:'+(over?'#d93025':'#f57f17')+';font-weight:600;flex-shrink:0">'+t.status+'</span>'+
@@ -1687,7 +1711,7 @@ function renderDashboard(){
 
   // メンバー進捗
   html+='<div style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;padding:16px">'+
-    '<div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:12px">👥 メンバー進捗</div>';
+    '<div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:12px">メンバー進捗</div>';
   if(!mems.length){
     html+='<div style="font-size:13px;color:var(--c-text3);text-align:center;padding:16px 0">タスクが未登録です</div>';
   } else {
@@ -1713,7 +1737,7 @@ function renderDashboard(){
   // 最近の通知
   html+='<div style="background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;padding:16px">'+
     '<div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">'+
-      '🔔 最近の通知'+
+      '最近の通知'+
       '<span onclick="setTab(\'notif\');markAllRead()" style="font-size:12px;color:var(--c-blue);cursor:pointer;font-weight:400">すべて見る</span>'+
     '</div>';
   if(!recentNotifs.length){
@@ -1750,7 +1774,7 @@ function renderNotifications(){
   } else {
     S.notifications.forEach(function(n){
       var isUnread=!(n.readBy||[]).includes(uid);
-      var typeIcon={events:'📅',tasks:'☑',files:'📁',projects:'🗂'}[n.type]||'🔔';
+      var typeIcon='';
       html+='<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:'+(isUnread?'#f6f9ff':'#fff')+';border:1px solid var(--c-border);border-radius:8px;margin-bottom:8px">'+
         '<div style="font-size:20px;flex-shrink:0">'+typeIcon+'</div>'+
         '<div style="flex:1">'+
@@ -1844,10 +1868,10 @@ function renderTasks(){
         '</div>'+
         '<div style="font-size:14px;font-weight:700;color:'+(pct>=80?'var(--c-green)':pct>=40?'var(--c-amber)':'var(--c-blue)')+'">'+pct+'%</div>'+
       '</div>'+
-      '<div style="display:flex;gap:10px;font-size:12px">'+
-        '<span style="color:var(--c-green);font-weight:600">✓ '+done+'</span>'+
-        '<span style="color:var(--c-blue);font-weight:600">● '+inProg+'</span>'+
-        '<span style="color:var(--c-text3)">○ '+all.filter(function(t){return t.status==='未着手';}).length+'</span>'+
+      '<div style="display:flex;gap:14px;font-size:12px">'+
+        '<span style="color:var(--c-green);font-weight:600">完了 '+done+'</span>'+
+        '<span style="color:var(--c-blue);font-weight:600">進行中 '+inProg+'</span>'+
+        '<span style="color:var(--c-text3)">未着手 '+all.filter(function(t){return t.status==='未着手';}).length+'</span>'+
       '</div>'+
       '<button onclick="openModal(\'share\',\''+S.proj+'\')" style="font-size:11px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);cursor:pointer;color:var(--c-text2);font-family:var(--font)">共有</button>'+
     '</div>';
@@ -1856,8 +1880,8 @@ function renderTasks(){
     // 企画書・香盤表クイックアクセス
     html+='<div style="display:flex;gap:8px;margin-top:10px">';
     var brief2=(S.briefs||[]).find(function(b){return b.projectId===S.proj;});
-    html+='<button onclick="openModal(\'brief\',\''+(brief2?brief2.id:'')+'\',\''+S.proj+'\')" style="font-size:12px;padding:4px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:'+(brief2?'var(--c-blue-light)':'var(--c-surface)')+';color:'+(brief2?'var(--c-blue)':'var(--c-text2)')+';cursor:pointer;font-family:var(--font)">📋 企画書'+(brief2?' ✓':'')+'</button>';
-    html+='<button onclick="setTab(\'koban\');S.kobanProj=\''+S.proj+'\';render()" style="font-size:12px;padding:4px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);color:var(--c-text2);cursor:pointer;font-family:var(--font)">📄 香盤表</button>';
+    html+='<button onclick="openModal(\'brief\',\''+(brief2?brief2.id:'')+'\',\''+S.proj+'\')" style="font-size:12px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:'+(brief2?'var(--c-blue-light)':'var(--c-surface)')+';color:'+(brief2?'var(--c-blue)':'var(--c-text2)')+';cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;gap:6px">'+ICON.document+'<span>企画書</span>'+(brief2?'<span style="display:inline-flex;color:var(--c-green)">'+ICON.check+'</span>':'')+'</button>';
+    html+='<button onclick="setTab(\'koban\');S.kobanProj=\''+S.proj+'\';render()" style="font-size:12px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);color:var(--c-text2);cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;gap:6px">'+ICON.koban+'<span>香盤表</span></button>';
     html+='</div>';
     html+='</div>'; // end topbar
 
@@ -1917,7 +1941,7 @@ function renderTasks(){
               (Array.isArray(t.who)?t.who:[t.who]).filter(Boolean).map(function(w){return avEl(w,20);}).join('')+
             '</div>'+
             '<div style="display:flex;align-items:center;gap:6px">'+
-              (commentCnt?'<span style="font-size:10px;color:var(--c-text3)">💬'+commentCnt+'</span>':'')+
+              (commentCnt?'<span style="font-size:10px;color:var(--c-text3)">'+commentCnt+'件</span>':'')+
               (t.due?'<span style="font-size:10px;font-weight:600;color:'+(over?'var(--c-red)':'var(--c-text3)')+'">'+t.due.slice(5).replace('-','/')+'</span>':'')+
             '</div>'+
           '</div>'+
@@ -1959,7 +1983,7 @@ function renderTasks(){
         'style="flex:1;font-size:12px;padding:7px 10px;border:1px solid var(--c-border);border-radius:16px;resize:none;min-height:34px;max-height:80px;line-height:1.4;font-family:var(--font);outline:none" '+
         'onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendProjChat(\''+S.proj+'\');}this.style.height=\'auto\';this.style.height=Math.min(this.scrollHeight,80)+\'px\'">'+
       '</textarea>'+
-      '<button onclick="sendProjChat(\''+S.proj+'\')" style="width:32px;height:32px;border-radius:50%;background:var(--c-blue);border:none;cursor:pointer;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">➤</button>'+
+      '<button onclick="sendProjChat(\''+S.proj+'\')" style="width:32px;height:32px;border-radius:50%;background:var(--c-blue);border:none;cursor:pointer;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+ICON.send+'</button>'+
     '</div>';
     html+='</div>'; // end chat col
 
@@ -2015,10 +2039,10 @@ function tkCard(t,compact){
       (Array.isArray(t.who)?t.who:[t.who].filter(Boolean)).map(function(w){return avEl(w,20)+'<span style="font-size:12px;color:var(--c-text2)">'+w.split(' ')[0]+'</span>';}).join('<span style="color:var(--c-text3);margin:0 2px">·</span>')+
     '</div>'+
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:7px">'+
-      '<span class="tkdue'+(over?' over':'')+'">'+(over?'⚠ ':'')+'期日 '+fmtDate(t.due)+'</span>'+
+      '<span class="tkdue'+(over?' over':'')+'">'+(over?'':'')+'期日 '+fmtDate(t.due)+'</span>'+
       '<div style="display:flex;align-items:center;gap:6px">'+
-        (commentCnt>0?'<span style="font-size:11px;color:var(--c-text3)">💬 '+commentCnt+'</span>':'')+
-        '<button style="font-size:11px;padding:2px 8px;border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface);cursor:pointer;color:var(--c-text)" onclick="event.stopPropagation();moveTask(\''+t.id+'\')">→ 次へ</button>'+
+        (commentCnt>0?'<span style="font-size:11px;color:var(--c-text3)">'+commentCnt+'件</span>':'')+
+        '<button style="font-size:11px;padding:2px 8px;border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface);cursor:pointer;color:var(--c-text)" onclick="event.stopPropagation();moveTask(\''+t.id+'\')">次へ</button>'+
       '</div>'+
     '</div>'+
   '</div>';
@@ -2033,7 +2057,7 @@ var _currentFolder=null;
 var _dragFileId=null;
 
 function renderFiles(){
-  var icoMap={video:'🎬',audio:'🎵',image:'🖼️',pdf:'📄',doc:'📝',sheet:'📊',other:'📁'};
+  var icoMap={video:'動画',audio:'音声',image:'画像',pdf:'PDF',doc:'文書',sheet:'表',other:'-'};
   var folders=S.folders||[];
   var currentFolder=_currentFolder;
 
@@ -2069,7 +2093,7 @@ function renderFiles(){
   // フォルダ追加・戻るボタン
   html+='<button onclick="openModal(\'folder\')" style="font-size:12px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);cursor:pointer;color:var(--c-text2);font-family:var(--font)">フォルダを追加</button>';
   if(currentFolder){
-    html+='<button onclick="goFolder(null)" style="font-size:12px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);cursor:pointer;color:var(--c-text2);font-family:var(--font)">← 戻る</button>';
+    html+='<button onclick="goFolder(null)" style="font-size:12px;padding:5px 12px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:var(--c-surface);cursor:pointer;color:var(--c-text2);font-family:var(--font)">戻る</button>';
   }
   html+='</div>';
 
@@ -2085,7 +2109,7 @@ function renderFiles(){
         ' ondragleave="this.style.background=\'\';this.style.borderStyle=\'solid\'"'+
         ' ondrop="event.preventDefault();this.style.background=\'\';this.style.borderStyle=\'solid\';dropToFolder(\''+folder.id+'\')"'+
       '>'+
-        '<div style="font-size:28px;margin-bottom:8px">📁</div>'+
+        '<div style="font-size:18px;margin-bottom:6px;color:var(--c-text3);font-weight:600;letter-spacing:.05em">フォルダ</div>'+
         '<div style="font-size:13px;font-weight:500;color:var(--c-text);word-break:break-word">'+folder.name+'</div>'+
         '<div style="font-size:11px;color:var(--c-text3);margin-top:2px">'+cnt+'件</div>'+
         '<button onclick="event.stopPropagation();delFolder(\''+folder.id+'\')" style="position:absolute;top:6px;right:8px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--c-text3);width:22px;height:22px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center">✕</button>'+
@@ -2095,7 +2119,7 @@ function renderFiles(){
 
   // ファイル一覧
   allFiles.forEach(function(f){
-    var ico=icoMap[f.type]||'📄';
+    var ico=icoMap[f.type]||'-';
     var isImg=f.type==='image'&&f.url;
     // プロジェクト名
     var projName='';
@@ -2279,7 +2303,7 @@ function renderChat(){
       'onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendChatFromTab();}this.style.height=\'auto\';this.style.height=Math.min(this.scrollHeight,110)+\'px\'" '+
       'onfocus="this.style.borderColor=\'var(--c-blue)\'" onblur="this.style.borderColor=\'\'">'+
     '</textarea>'+
-    '<button onclick="sendChatFromTab()" style="width:36px;height:36px;border-radius:50%;background:var(--c-blue);border:none;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0">➤</button>'+
+    '<button onclick="sendChatFromTab()" style="width:36px;height:36px;border-radius:50%;background:var(--c-blue);border:none;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+ICON.send+'</button>'+
   '</div>';
   html+='</div>';
 
@@ -2402,16 +2426,16 @@ function renderKoban(){
         '</div>'+
         // 場所
         (r.place?'<div style="display:flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;color:var(--c-text2)">'+
-          '<span style="font-size:14px">📍</span><span>'+r.place+'</span></div>':'')+
+          '<span style="font-size:11px;color:var(--c-text3);font-weight:600">場所</span><span>'+r.place+'</span></div>':'')+
         // 出演者
         (r.cast?'<div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;color:var(--c-text2)">'+
-          '<span style="font-size:14px">🎬</span><span>'+r.cast+'</span></div>':'')+
+          '<span style="font-size:11px;color:var(--c-text3);font-weight:600">出演</span><span>'+r.cast+'</span></div>':'')+
         // 担当スタッフ
         (r.who?'<div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;color:var(--c-text2)">'+
-          '<span style="font-size:14px">👤</span><span>'+(Array.isArray(r.who)?r.who.join('・'):r.who)+'</span></div>':'')+
+          '<span style="font-size:11px;color:var(--c-text3);font-weight:600">担当</span><span>'+(Array.isArray(r.who)?r.who.join('・'):r.who)+'</span></div>':'')+
         // 機材
         (r.equipment?'<div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;color:var(--c-text2)">'+
-          '<span style="font-size:14px">🎥</span><span>'+r.equipment+'</span></div>':'')+
+          '<span style="font-size:11px;color:var(--c-text3);font-weight:600">機材</span><span>'+r.equipment+'</span></div>':'')+
         // 備考
         (r.note?'<div style="margin-top:6px;padding:6px 8px;background:var(--c-surface2);border-radius:6px;font-size:11px;color:var(--c-text3)">'+r.note+'</div>':'')+
       '</div>'+
@@ -2623,15 +2647,15 @@ function renderModal(){
           '<textarea class="comment-input" id="comment-input" placeholder="コメントを入力... (Enterで送信)" rows="1"'+
             ' onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendComment(\''+tk.id+'\');}'+
             ' this.style.height=\'auto\';this.style.height=Math.min(this.scrollHeight,100)+\'px\'"></textarea>'+
-          '<button class="comment-send" onclick="sendComment(\''+tk.id+'\')">➤</button>'+
+          '<button class="comment-send" onclick="sendComment(\''+tk.id+'\')">'+ICON.send+'</button>'+
         '</div>'+
       '</div>';
     }
 
     return '<div class="modal" onclick="event.stopPropagation()" style="max-width:480px">'+
       '<h3>'+(tk?'タスクを編集':'新しいタスク')+'</h3>'+
-      (!tk?'<div style="font-size:12px;background:#e8f0fe;color:#1a73e8;padding:8px 12px;border-radius:4px;margin-bottom:16px">📅 期日がスケジュールに自動追加されます</div>':'')+
-      (over?'<div style="font-size:12px;background:#fce8e6;color:#d93025;padding:8px 12px;border-radius:4px;margin-bottom:12px">⚠ 期日を過ぎています（'+fmtDate(tk.due)+'）</div>':'')+
+      (!tk?'<div style="font-size:12px;background:#e8f0fe;color:#1a73e8;padding:8px 12px;border-radius:4px;margin-bottom:16px">期日がスケジュールに自動追加されます</div>':'')+
+      (over?'<div style="font-size:12px;background:#fce8e6;color:#d93025;padding:8px 12px;border-radius:4px;margin-bottom:12px">期日を過ぎています（'+fmtDate(tk.due)+'）</div>':'')+
       '<div class="field"><label>タスク名</label><input id="m-title" value="'+(tk?tk.title||'':'')+'" placeholder="例: 本編カット編集"/></div>'+
       '<div class="field"><label>概要</label><textarea id="m-desc">'+(tk?tk.desc||'':'')+' </textarea></div>'+
       '<div class="field"><label>担当者（複数選択可）</label>'+
@@ -2729,7 +2753,7 @@ function renderModal(){
     var projId=S.editId;
     var proj=S.projects.find(function(p){return p.id===projId;})||{name:'プロジェクト'};
     return '<div class="modal" onclick="event.stopPropagation()">'+
-      '<h3>🔗 共有リンクを生成</h3>'+
+      '<h3>共有リンクを生成</h3>'+
       '<div style="font-size:13px;color:var(--c-text2);margin-bottom:16px;padding:10px 12px;background:var(--c-surface2);border-radius:var(--radius-sm)">'+
         '<strong>'+proj.name+'</strong> の閲覧専用リンクを生成します。<br>香盤表・予定・タスクが確認できます。'+
       '</div>'+
@@ -2746,7 +2770,7 @@ function renderModal(){
       '<div id="sh-result" style="display:none">'+
         '<div style="font-size:12px;font-weight:600;color:var(--c-text2);margin-bottom:6px">共有リンク（クリックでコピー）</div>'+
         '<div class="share-link-box" id="sh-link" onclick="copyShareLink()"></div>'+
-        '<button class="share-copy-btn" onclick="copyShareLink()">📋 リンクをコピー</button>'+
+        '<button class="share-copy-btn" onclick="copyShareLink()">リンクをコピー</button>'+
       '</div>'+
       '<div class="ma">'+
         '<button class="btn" onclick="closeModal()">閉じる</button>'+
@@ -2952,7 +2976,7 @@ function saveTask(){
     var proj=S.projects.find(function(p){return p.id===projectId;});
     var tagColor=(S.tags.find(function(t){return t.name===tag;})||{}).color||'#1a73e8';
     dbAdd('events',{title:'【期日】'+title,date:due,start:'09:00',end:'09:30',attendees:who,color:tagColor,note:'担当: '+who.join('・')+(proj?' ／ '+proj.name:''),fromTask:true,taskId:ref.id});
-    toast('📅「'+title+'」をスケジュールに追加しました');
+    toast('「'+title+'」をスケジュールに追加しました');
   });
   closeModal();
 }
@@ -2962,7 +2986,7 @@ function saveTaskDetail(id){
   var who=_taskWho.slice();
   dbUp('tasks',id,{title:title,desc:desc,who:who,status:status,due:due,tag:tag,projectId:projectId});
   var ev=S.events.find(function(e){return e.fromTask&&e.taskId===id;});
-  if(ev&&due!==tk.due){dbUp('events',ev.id,{title:'【期日】'+title,date:due,attendees:who});toast('📅 スケジュールの期日も更新しました');}
+  if(ev&&due!==tk.due){dbUp('events',ev.id,{title:'【期日】'+title,date:due,attendees:who});toast('スケジュールの期日も更新しました');}
   closeModal();
 }
 function delTask(id){
@@ -3103,7 +3127,7 @@ function loadShareView(token){
 
 function renderShareExpired(msg){
   return '<div class="share-expired">'+
-    '<div style="font-size:48px">🔒</div>'+
+    '<div style="font-size:14px;font-weight:700;color:var(--c-text3);letter-spacing:.05em">PROTECTED</div>'+
     '<div style="font-size:18px;font-weight:600;color:var(--c-text)">'+msg+'</div>'+
     '<div style="font-size:13px;color:var(--c-text3)">リンクを発行したチームにお問い合わせください</div>'+
     '<div style="margin-top:16px"><div style="font-size:12px;font-weight:700;letter-spacing:1px;color:var(--c-blue)">ZIP TOOL</div></div>'+
@@ -3126,7 +3150,7 @@ function renderShareView(share,proj,events,koban,tasks){
   // 香盤表セクション
   var kobanDates=Array.from(new Set(koban.map(function(r){return r.date;}).filter(Boolean))).sort();
   if(kobanDates.length){
-    html+='<div class="share-section"><div class="share-section-title">📋 香盤表</div>';
+    html+='<div class="share-section"><div class="share-section-title">香盤表</div>';
     kobanDates.forEach(function(date){
       var dayRows=koban.filter(function(r){return r.date===date;}).sort(function(a,b){return (a.startTime||'').localeCompare(b.startTime||'');});
       html+='<div style="margin-bottom:20px"><div style="font-size:13px;font-weight:600;color:var(--c-text);margin-bottom:10px">'+fmtDateFull(date)+'</div>';
@@ -3144,8 +3168,8 @@ function renderShareView(share,proj,events,koban,tasks){
           '<div style="flex:1">'+
             '<div style="font-size:14px;font-weight:500;color:var(--c-text);margin-bottom:3px">'+(r.content||'')+'</div>'+
             '<div style="font-size:12px;color:var(--c-text2)">'+
-              (r.place?'📍 '+r.place+'　':'')+
-              (r.who?'👤 '+(Array.isArray(r.who)?r.who.join('・'):r.who):'')+'</div>'+
+              (r.place?r.place+'　':'')+
+              (r.who?(Array.isArray(r.who)?r.who.join('・'):r.who):'')+'</div>'+
             (r.note?'<div style="font-size:11px;color:var(--c-text3);margin-top:3px">'+r.note+'</div>':'')+
             (isNow?'<div style="font-size:11px;font-weight:600;color:var(--c-amber);margin-top:4px">▶ 進行中</div>':'')+
           '</div>'+
@@ -3159,7 +3183,7 @@ function renderShareView(share,proj,events,koban,tasks){
   // 予定セクション（今日以降）
   var futureEvs=events.filter(function(e){return e.date&&e.date>=today&&!e.fromTask;}).sort(function(a,b){return a.date.localeCompare(b.date);}).slice(0,10);
   if(futureEvs.length){
-    html+='<div class="share-section"><div class="share-section-title">📅 今後の予定</div>';
+    html+='<div class="share-section"><div class="share-section-title">今後の予定</div>';
     futureEvs.forEach(function(e){
       html+='<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);margin-bottom:8px">'+
         '<div style="width:60px;flex-shrink:0;text-align:center">'+
